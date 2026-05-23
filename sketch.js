@@ -276,7 +276,7 @@ function analyzeRedColumn(x) {
   freq = lerp(freq, lastFreqRed, 0.3);
   if (osc) osc.freq(freq);
 
-  let amp = map(constrain(maxContrast * 1.5, 0, 255), 0, 255, 0.3, 0.6);
+  let amp = map(constrain(maxContrast * 1.5, 0, 255), 0, 255, 0.5, 0.6);
   if (osc) osc.amp(amp, 0.05);
   lastFreqRed = freq;
 }
