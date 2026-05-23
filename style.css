@@ -1,15 +1,15 @@
 body {
   margin: 0;
   padding: 20px;
-  background: #2b2b2b;          /* 深灰色背景 */
+  background: #2b2b2b;        
   font-family: sans-serif;
   text-align: center;
-  color: #ddd;                  /* 浅色文字 */
+  color: #ddd;                
 }
 #container {
-  max-width: 1300px;            /* 稍微放宽容器宽度 */
+  max-width: 1300px;            
   margin: 0 auto;
-  background: #3c3c3c;          /* 稍浅一点的深灰色 */
+  background: #3c3c3c;          
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.4);
@@ -20,7 +20,7 @@ h1 {
 canvas {
   display: block;
   margin: 20px auto;
-  border: 1px solid #555;       /* 边框也改为深色 */
+  border: 1px solid #555;       
 }
 button, input {
   font-size: 16px;
@@ -66,7 +66,7 @@ button:disabled {
 }
 
 .qrcode {
-  width: 140px;          /* 可自行调整大小 */
+  width: 140px;
   height: auto;
   margin: 10px 15px;
   border-radius: 8px;
