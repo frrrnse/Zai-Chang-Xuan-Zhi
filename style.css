@@ -1,49 +1,133 @@
+/* ===== 全局重置与基础 ===== */
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   padding: 20px;
-  background: #2b2b2b;        
-  font-family: sans-serif;
+  background: #2b2b2b;
+  font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
   text-align: center;
-  color: #ddd;                
+  color: #ddd;
 }
+
+/* ===== 主容器 ===== */
 #container {
-  max-width: 1300px;            
+  max-width: 1300px;
   margin: 0 auto;
-  background: #3c3c3c;          
+  background: #3c3c3c;
   padding: 20px;
   border-radius: 12px;
   box-shadow: 0 2px 10px rgba(0,0,0,0.4);
 }
+
+/* ===== 标题 ===== */
 h1 {
   color: #fff;
+  font-size: 28px;
+  margin-top: 10px;
+  margin-bottom: 20px;
+  letter-spacing: 2px;
 }
+
+/* ===== 画布 ===== */
 canvas {
   display: block;
   margin: 20px auto;
-  border: 1px solid #555;       
+  border: 1px solid #555;
+  border-radius: 4px;
+  max-width: 100%;
 }
-button, input {
+
+/* ===== 控制栏 — flex 布局 ===== */
+#controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin: 15px 0;
+}
+
+/* ===== 统一样式：按钮 & 文件输入 ===== */
+button,
+input[type="file"] {
   font-size: 16px;
-  padding: 8px 16px;
-  margin: 5px;
+  padding: 8px 18px;
+  margin: 0;
   background: #555;
   color: #fff;
   border: 1px solid #777;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
+  user-select: none;
+  transition: background 0.2s ease, opacity 0.2s ease, transform 0.1s ease;
 }
+
+button:hover:not(:disabled) {
+  background: #6a6a6a;
+}
+
+button:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
 button:disabled {
-  opacity: 0.5;
+  opacity: 0.45;
   cursor: not-allowed;
 }
+
+/* ===== 文件输入专用 ===== */
+input[type="file"] {
+  background: #4a4a4a;
+  padding: 8px 14px;
+  cursor: pointer;
+}
+
+input[type="file"]::-webkit-file-upload-button {
+  background: #666;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  padding: 4px 12px;
+  margin-right: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+input[type="file"]::-webkit-file-upload-button:hover {
+  background: #7a7a7a;
+}
+
+/* ===== 下载按钮统一风格（绿色系） ===== */
+#downloadBtn,
+#downloadFocusBtn {
+  background: #3a6a5a;
+  border-color: #4a8a7a;
+}
+
+#downloadBtn:hover:not(:disabled),
+#downloadFocusBtn:hover:not(:disabled) {
+  background: #4a7a6a;
+}
+
+/* ===== 状态文字 ===== */
 #status {
   color: #aaa;
+  font-size: 15px;
+  margin: 10px 0 5px 0;
+  min-height: 24px;
+  line-height: 1.5;
 }
+
+/* ===== 页脚 ===== */
 #footer {
   margin-top: 40px;
   padding: 20px 0;
   color: #ccc;
   text-align: center;
+  border-top: 1px solid #4a4a4a;
 }
 
 #author-line {
@@ -51,16 +135,20 @@ button:disabled {
   margin-bottom: 15px;
 }
 
+/* 作品链接 */
 #album-link {
   color: #5dade2;
   margin-left: 15px;
   text-decoration: none;
+  transition: color 0.2s;
 }
 
 #album-link:hover {
+  color: #85c1e9;
   text-decoration: underline;
 }
 
+/* ===== 二维码 ===== */
 #qrcodes {
   margin-top: 10px;
 }
@@ -71,4 +159,78 @@ button:disabled {
   margin: 10px 15px;
   border-radius: 8px;
   box-shadow: 0 0 8px rgba(0,0,0,0.5);
+  vertical-align: middle;
+}
+
+/* ===== 版权信息 ===== */
+#footer p:last-child {
+  margin-top: 15px;
+}
+
+/* ================================================================ */
+/* ===== 响应式 —— 平板 & 手机 ===== */
+/* ================================================================ */
+
+@media screen and (max-width: 768px) {
+  body {
+    padding: 12px;
+  }
+
+  #container {
+    padding: 14px;
+    border-radius: 8px;
+  }
+
+  h1 {
+    font-size: 22px;
+    letter-spacing: 1px;
+  }
+
+  #controls {
+    gap: 8px;
+  }
+
+  button,
+  input[type="file"] {
+    font-size: 14px;
+    padding: 7px 14px;
+  }
+
+  .qrcode {
+    width: 110px;
+    margin: 8px 10px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  body {
+    padding: 8px;
+  }
+
+  #container {
+    padding: 10px;
+  }
+
+  h1 {
+    font-size: 18px;
+  }
+
+  button,
+  input[type="file"] {
+    font-size: 13px;
+    padding: 6px 10px;
+  }
+
+  #controls {
+    gap: 5px;
+  }
+
+  #author-line {
+    font-size: 13px;
+  }
+
+  .qrcode {
+    width: 90px;
+    margin: 6px 8px;
+  }
 }
