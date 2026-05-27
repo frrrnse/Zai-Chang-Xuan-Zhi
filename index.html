@@ -12,15 +12,26 @@
 <body>
   <div id="container">
     <h1>《在场悬置》——悬置你的照片</h1>
+
+    <!-- 控制栏 -->
     <div id="controls">
       <input type="file" id="fileInput" accept="image/*">
       <button id="startBtn" disabled>开始扫描</button>
       <button id="downloadBtn" style="display:none;">下载你的悬置图</button>
+      <button id="downloadFocusBtn" style="display:none;">下载焦点照片</button>
     </div>
+
+    <!-- p5.js 画布挂载点 -->
     <div id="canvasContainer"></div>
+
+    <!-- 状态提示 -->
     <p id="status">请先选择一张图片</p>
   </div>
+
+  <!-- JS 主逻辑 -->
   <script src="sketch.js"></script>
+
+  <!-- 页脚 -->
   <div id="footer">
     <p id="author-line">
       作者：任宇坤 &nbsp; 公众号&amp;小红书：呼呼hu
@@ -32,7 +43,7 @@
       <img src="qrcode_xiaohongshu.png" alt="小红书二维码" class="qrcode">
     </div>
     <p style="color:#aaa;font-size:12px;">
-    代码保留所有版权，严禁任何商业性使用，转载请注明出处。
+      代码保留所有版权，严禁任何商业性使用，转载请注明出处。
     </p>
   </div>
 </body>
