@@ -916,6 +916,78 @@ function runFocusAnalysis() {
     }
   }
 
+  let trajBandTop = imgHeight;
+  let trajBandBottom = 0;
+  for (let x = 0; x < imgWidth; x++) {
+    let y = redYPositions[x];
+    trajBandTop = Math.min(trajBandTop, y);
+    trajBandBottom = Math.max(trajBandBottom, y);
+  }
+
+  let bandMargin = imgHeight * 0.15;
+  let searchYStart = Math.max(0, Math.floor(trajBandTop - bandMargin));
+  let searchYEnd = Math.min(imgHeight - 1, Math.ceil(trajBandBottom + bandMargin));
+
+  let redPatchGrid = [];
+  for (let r = 0; r < gridRows; r++) {
+    redPatchGrid[r] = new Array(gridCols).fill(0);
+  }
+
+  for (let r = 0; r < gridRows; r++) {
+    for (let c = 0; c < gridCols; c++) {
+      let gridYCenter = (r + 0.5) * gridSize;
+    
+      if (gridYCenter < searchYStart || gridYCenter > searchYEnd) continue;
+
+      let xStart = c * gridSize;
+      let xEnd = Math.min(imgWidth - 1, (c + 1) * gridSize);
+      let yStart = r * gridSize;
+      let yEnd = Math.min(imgHeight - 1, (r + 1) * gridSize);
+
+      let redCount = 0;
+      let totalCount = 0;
+      let step2 = Math.max(1, Math.floor(gridSize / 3));
+
+      for (let x = xStart; x <= xEnd; x += step2) {
+        for (let y = yStart; y <= yEnd; y += step2) {
+          let { r: red, g, b } = getRGB(x, y);
+          let hsb = rgbToHSB(red, g, b);
+          totalCount++;
+          let isRed = (hsb.h >= 245 && hsb.s > 204 && hsb.v > 140) ||
+                      ((hsb.h >= 240 || hsb.h <= 10) && hsb.s > 185 && hsb.v > 130);
+          if (isRed) redCount++;
+        }
+      }
+
+      let redRatio = totalCount > 0 ? redCount / totalCount : 0;
+
+      if (redRatio > 0.20) {
+        redPatchGrid[r][c] = 18;
+      } else if (redRatio > 0.10) {
+        redPatchGrid[r][c] = 14;
+      } else if (redRatio > 0.05) {
+        redPatchGrid[r][c] = 10;
+      }
+    }
+  }
+
+  for (let r = 0; r < gridRows; r++) {
+    for (let c = 0; c < gridCols; c++) {
+      if (redPatchGrid[r][c] > 0) {
+        for (let dr = -1; dr <= 1; dr++) {
+          for (let dc = -1; dc <= 1; dc++) {
+            let nr = r + dr, nc = c + dc;
+            if (nr >= 0 && nr < gridRows && nc >= 0 && nc < gridCols) {
+              let weight = (dr === 0 && dc === 0) ? 1.0 : 0.4;
+              gridScore[nr][nc] += redPatchGrid[r][c] * weight;
+            }
+          }
+        }
+      }
+    }
+  }
+
+
 
   let minTriggerRun = Math.max(gridSize, Math.floor(imgWidth * 0.015));
   let inTrigger = false;
